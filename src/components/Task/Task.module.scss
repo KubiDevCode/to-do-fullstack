@@ -1,0 +1,73 @@
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  margin: 6px 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task:hover {
+  background-color: #f3f3f3;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.task p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  word-break: break-word;
+}
+
+.taskDone {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.eyeButton {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.eyeButton:hover {
+  background-color: #e9e9e9;
+}
+
+.eyeButton:active {
+  transform: scale(0.96);
+}
+
+.eyeIcon {
+  width: 18px;
+  height: 18px;
+  color: #555;
+}
