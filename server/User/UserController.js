@@ -1,28 +1,30 @@
 import UserService from "../services/UserService.js"
 import TokenService from "../services/TokenService.js"
 import { validationResult } from "express-validator"
+import { ApiError } from "../ApiError.js"
 
 class UserController {
     async registration(req, res, next) {
         try {
-            const { username, password, email } = req.body
             const errors = validationResult(req)
 
             if (!errors.isEmpty()) {
-                return next(ApiError.BadRequest('Ошибка валидации', errors.array()))
+                return next(
+                    ApiError.BadRequest('Ошибка валидации', errors.mapped())
+                )
             }
 
-            const userData = await UserService.registration(username, email, password)
+            const { email, password, username } = req.body
+            const userData = await UserService.registration(email, password, username)
+
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true
+                httpOnly: true,
             })
 
-            return res.json(userData)
-            next()
+            return res.status(201).json(userData)
         } catch (error) {
-            console.log(error)
-            return res.status(error.status || 400).json({ message: error.message })
+            next(error)
         }
     }
 
