@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { FilterTasks } from '../../components/FilterTasks/FilterTasks';
 import { Task } from '../../components/Task/Task';
-import { tasksSelector, fetchAllTasks, todoActions, logout, userSelector, findTask, setFilterTasks, filterSelector } from '../../redux/todoSlice';
+import { tasksSelector, fetchAllTasks, logout, userSelector, findTask, setFilterTasks, filterSelector } from '../../redux/todoSlice';
 import s from './TaskPage.module.scss';
 import { Form } from '../../components/Form/Form';
 import { useAuth } from '../../hooks/useAuth';
@@ -32,6 +32,10 @@ export const TaskPage = ({ className }: TaskPageProps) => {
             dispatch(fetchAllTasks());
         }
     };
+
+    const onAllTasks =()=>{
+        navigate('/tasks')
+    }
 
     const onLogout = () => {
         dispatch(logout());
@@ -99,6 +103,9 @@ export const TaskPage = ({ className }: TaskPageProps) => {
                             </button>
                             <button className={s.exitButton} onClick={onLogout}>
                                 Выйти
+                            </button>
+                            <button className={s.reloadButton} onClick={onAllTasks}>
+                                Все задачи
                             </button>
                         </div>
                     </div>

@@ -238,6 +238,7 @@ export const todoSlice = createSlice({
                     role: "USER"
                 };
                 state.tasks = []
+                state.allTasks = []
             })
             .addCase(findTask.fulfilled, (state, action) => {
                 state.tasks = action.payload

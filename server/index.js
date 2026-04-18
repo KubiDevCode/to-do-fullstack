@@ -5,6 +5,7 @@ const app = express()
 import taskRouter from './Task/taskRouter.js'
 import authRouter from './User/UserRouter.js'
 import cookieParser from 'cookie-parser'
+import ErrorMiddleware from './middleware/ErrorMiddleware.js'
 
 const DB_URL = "mongodb+srv://user:user@cluster0.1ihtlqh.mongodb.net/"
 
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use('/todo', taskRouter)
 app.use('/todo', authRouter)
+app.use(ErrorMiddleware)
 
 
 async function startApp() {

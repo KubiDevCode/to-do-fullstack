@@ -128,7 +128,7 @@ class TaskController {
 
     async getAllAdminTask(req, res) {
         try {
-            const uersTasks = await TaskService.getAllUsersTask()
+            const uersTasks = await TaskService.getAllAdminTask()
             return res.json(uersTasks)
         } catch (error) {
             res.status(500).json({ message: error.message })
