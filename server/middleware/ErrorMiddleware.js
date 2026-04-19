@@ -1,5 +1,6 @@
-export default function(err, req, res, next) {
+export default function (err, req, res, next) {
     return res.status(err.status || 500).json({
-        message: err.message || 'Непредвиденная ошибка'
+        message: err.message || 'Непредвиденная ошибка',
+        errors: err.errors || {},
     })
 }

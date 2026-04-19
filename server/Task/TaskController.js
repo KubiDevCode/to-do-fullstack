@@ -1,10 +1,19 @@
+import { ApiError } from '../ApiError.js'
 import TaskService from '../services/TaskService.js'
+import { validationResult } from "express-validator"
 
 class TaskController {
-    async create(req, res) {
+    async create(req, res, next) {
         try {
             const task = req.body
             task.user = req.user.id
+
+            const errors = validationResult(req)
+
+            if (!errors.isEmpty()) {
+                next(ApiError.ValidError(errors))
+            }
+
             const post = await TaskService.create(task)
             res.json(post)
         } catch (error) {
@@ -97,12 +106,14 @@ class TaskController {
         try {
             const { userId, findTask, filter } = req.body
 
-            if (!userId) {
-                return res.status(400).json({ message: 'нет userid' })
+            const errors = validationResult(req)
+
+            if (!errors.isEmpty()) {
+                next(ApiError.ValidError(errors))
             }
 
-            if (!findTask) {
-                return res.status(400).json({ message: 'нет парамаетров поиска' })
+            if (!userId) {
+                return res.status(400).json({ message: 'нет userid' })
             }
 
             const filteredTask = await TaskService.findTask(userId, findTask, filter)

@@ -6,23 +6,21 @@ import { ApiError } from "../ApiError.js"
 class UserController {
     async registration(req, res, next) {
         try {
+            const { username, password, email } = req.body
             const errors = validationResult(req)
 
             if (!errors.isEmpty()) {
-                return next(
-                    ApiError.BadRequest('Ошибка валидации', errors.mapped())
-                )
+                next(ApiError.ValidError(errors))
             }
 
-            const { email, password, username } = req.body
-            const userData = await UserService.registration(email, password, username)
+            const userData = await UserService.registration(username, email, password)
 
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
+                httpOnly: true
             })
 
-            return res.status(201).json(userData)
+            return res.json(userData)
         } catch (error) {
             next(error)
         }

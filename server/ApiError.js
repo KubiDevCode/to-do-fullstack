@@ -20,4 +20,17 @@ export class ApiError extends Error {
         return new ApiError(404, message)
     }
 
+    static ValidError(errors) {
+        const formattedErrors = Object.fromEntries(
+            Object.entries(errors.mapped()).map(([key, value]) => [
+                key,
+                {
+                    msg: value.msg,
+                    path: value.path,
+                },
+            ])
+        )
+
+        return ApiError.BadRequest('Ошибка валидации', formattedErrors)
+    }
 }
