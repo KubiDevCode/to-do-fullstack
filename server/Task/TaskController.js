@@ -5,19 +5,16 @@ import { validationResult } from "express-validator"
 class TaskController {
     async create(req, res, next) {
         try {
-            const task = req.body
-            task.user = req.user.id
-
             const errors = validationResult(req)
-
             if (!errors.isEmpty()) {
-                next(ApiError.ValidError(errors))
+                return next(ApiError.ValidError(errors))
             }
 
+            const task = { ...req.body, user: req.user.id }
             const post = await TaskService.create(task)
-            res.json(post)
+            return res.json(post)
         } catch (error) {
-            res.status(500).json({ message: error.message })
+            return next(error)
         }
     }
 

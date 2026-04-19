@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import s from './FilterTasks.module.scss';
-import { filterSelector, setFilterTasks, todoActions, type FilterTasksTypes } from '../../redux/todoSlice';
+import { filterSelector, setFilterTasks, todoActions, } from '../../redux/todoSlice';
+import type { FilterTasksTypes } from '../../types/types';
 
 interface FilterTasksProps {
     className?: string;

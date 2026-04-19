@@ -7,7 +7,6 @@ import authRouter from './User/UserRouter.js'
 import cookieParser from 'cookie-parser'
 import ErrorMiddleware from './middleware/ErrorMiddleware.js'
 
-const DB_URL = "mongodb+srv://user:user@cluster0.1ihtlqh.mongodb.net/"
 
 app.use(express.json())
 app.use(cookieParser())
@@ -18,7 +17,7 @@ app.use(ErrorMiddleware)
 
 async function startApp() {
     try {
-        await mongoose.connect(DB_URL)
+        await mongoose.connect(process.env.DB_URL)
         app.listen(3000, () => {
             console.log(`Сервер запущен на порту 3000`)
         })

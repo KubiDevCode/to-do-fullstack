@@ -6,23 +6,22 @@ import { ApiError } from "../ApiError.js"
 class UserController {
     async registration(req, res, next) {
         try {
-            const { username, password, email } = req.body
             const errors = validationResult(req)
-
             if (!errors.isEmpty()) {
-                next(ApiError.ValidError(errors))
+                return next(ApiError.ValidError(errors))
             }
 
+            const { username, password, email } = req.body
             const userData = await UserService.registration(username, email, password)
 
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true
+                httpOnly: true,
             })
 
             return res.json(userData)
         } catch (error) {
-            next(error)
+            return next(error)
         }
     }
 
