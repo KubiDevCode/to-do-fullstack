@@ -1,73 +1,152 @@
-# React + TypeScript + Vite
+# To-Do Fullstack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Fullstack To-Do приложение с клиентом на **React + TypeScript + Vite** и сервером на **Node.js + Express + MongoDB**. В проекте есть авторизация, работа с задачами и разделение на frontend/backend в одном репозитории. Основа фронта построена вокруг **Redux Toolkit**, **React Router** и **Axios**. Основа бэка — **Express**, **Mongoose**, **JWT**, **cookie-parser** и сервисная структура по модулям. citeturn675508view0turn548074view0turn731189view0
 
-Currently, two official plugins are available:
+## Стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Frontend
+- React 19
+- TypeScript
+- Vite
+- Redux Toolkit
+- React Router DOM
+- Axios
+- SCSS
 
-## React Compiler
+### Backend
+- Node.js
+- Express 5
+- MongoDB + Mongoose
+- JWT
+- cookie-parser
+- bcryptjs
+- express-validator
+- nodemailer
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Список зависимостей и скриптов подтверждается `package.json`, а структура клиента и сервера — каталогами `src/` и `server/`. citeturn548074view0turn731189view1turn731189view0
 
-## Expanding the ESLint configuration
+## Структура проекта
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+.
+├── public/
+├── server/
+│   ├── Task/
+│   ├── Token/
+│   ├── User/
+│   ├── config/
+│   ├── dto/
+│   ├── middleware/
+│   ├── services/
+│   ├── ApiError.js
+│   └── index.js
+├── src/
+│   ├── app/
+│   ├── components/
+│   ├── hooks/
+│   ├── pages/
+│   ├── redux/
+│   ├── router/
+│   ├── service/
+│   ├── types/
+│   ├── api.ts
+│   ├── index.scss
+│   └── main.tsx
+├── package.json
+└── vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Такая структура уже есть в репозитории: отдельно frontend в `src/` и backend в `server/`. citeturn731189view1turn731189view0
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Возможности
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- регистрация и авторизация пользователя;
+- хранение токенов и refresh-логика;
+- создание, получение, обновление и удаление задач;
+- роутинг на клиенте;
+- централизованная работа с API через Axios;
+- хранение состояния через Redux Toolkit.
+
+Наличие модулей `Task`, `Token`, `User`, а также клиентских папок `redux`, `router`, `service` и файла `api.ts` указывает именно на такую функциональность. citeturn731189view0turn731189view1turn548074view2
+
+## Запуск проекта
+
+### 1. Клонировать репозиторий
+
+```bash
+git clone https://github.com/KubiDevCode/to-do-fullstack.git
+cd to-do-fullstack
 ```
+
+### 2. Установить зависимости
+
+```bash
+npm install
+```
+
+### 3. Запустить frontend
+
+```bash
+npm run dev
+```
+
+По `package.json` dev-сервер фронта запускается через Vite. citeturn548074view0
+
+### 4. Запустить backend
+
+```bash
+npm run serve
+```
+
+Сервер запускается командой `nodemon ./server/index.js`. citeturn548074view0
+
+## Сборка
+
+```bash
+npm run build
+```
+
+Команда сборки запускает TypeScript build и затем Vite build. citeturn548074view0
+
+## Линтинг
+
+```bash
+npm run lint
+```
+
+В проекте подключен ESLint. citeturn548074view0
+
+## Конфигурация окружения
+
+В серверной части используется `dotenv`, а точка входа подключает `./config/index.js`, поэтому проекту нужны переменные окружения для запуска. Кроме того, в `server/index.js` сейчас указан MongoDB URL и запуск сервера на порту `3000`. Для нормальной локальной разработки лучше вынести чувствительные данные в `.env`. citeturn548074view0turn548074view2
+
+Пример `.env`:
+
+```env
+PORT=3000
+DB_URL=mongodb://localhost:27017/todo
+JWT_ACCESS_SECRET=your_access_secret
+JWT_REFRESH_SECRET=your_refresh_secret
+SMTP_HOST=your_smtp_host
+SMTP_PORT=587
+SMTP_USER=your_email
+SMTP_PASSWORD=your_password
+CLIENT_URL=http://localhost:5173
+```
+
+## API
+
+Базовый префикс backend-маршрутов — `/todo`, потому что в `server/index.js` и task-router, и auth-router монтируются именно на этот путь. citeturn548074view2
+
+Примерно проект ожидает такие группы маршрутов:
+
+- `/todo/login`
+- `/todo/registration`
+- `/todo/refresh`
+- `/todo/...` для операций с задачами
+
+
+## Автор
+
+**KubiDevCode**  
+GitHub: https://github.com/KubiDevCode
