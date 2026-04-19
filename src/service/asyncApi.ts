@@ -51,7 +51,7 @@ export const deleteTask = createAsyncThunk<Task, string, { rejectValue: string }
 
 export const doTask = createAsyncThunk<
     { updatedTask: Task; tasks: Task[] },
-    { _id: string; done: boolean; filter: FilterTasksTypes },
+    { _id: string; done: boolean; },
     { rejectValue: string }
 >(
     'tasks/doTask',

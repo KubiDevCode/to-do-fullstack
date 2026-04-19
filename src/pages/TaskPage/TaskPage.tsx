@@ -1,12 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { FilterTasks } from '../../components/FilterTasks/FilterTasks';
 import { Task } from '../../components/Task/Task';
-import { tasksSelector, fetchAllTasks, logout, userSelector, findTask, setFilterTasks, filterSelector } from '../../redux/todoSlice';
+import { tasksSelector, userSelector, setFilterTasks, filterSelector, useAppDispatch } from '../../redux/todoSlice';
 import s from './TaskPage.module.scss';
 import { Form } from '../../components/Form/Form';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { fetchAllTasks, logout, findTask } from '../../service/asyncApi';
 
 interface TaskPageProps {
     className?: string;
@@ -14,7 +15,7 @@ interface TaskPageProps {
 
 export const TaskPage = ({ className }: TaskPageProps) => {
     const [searchValue, setSearchValue] = useState('')
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const tasks = useSelector(tasksSelector);
     const navigate = useNavigate();
     const filter = useSelector(filterSelector)
@@ -33,7 +34,7 @@ export const TaskPage = ({ className }: TaskPageProps) => {
         }
     };
 
-    const onAllTasks =()=>{
+    const onAllTasks = () => {
         navigate('/tasks')
     }
 
@@ -53,7 +54,7 @@ export const TaskPage = ({ className }: TaskPageProps) => {
     const onSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const { id } = user
-        dispatch(findTask({ userId: id, task: searchValue }))
+        dispatch(findTask({ userId: id, task: searchValue, filter }))
     }
 
     if (!user.name) {

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import s from './Form.module.scss';
-import { useDispatch } from 'react-redux';
-import { createTask } from '../../redux/todoSlice';
+import { useAppDispatch } from '../../redux/todoSlice';
+import { createTask } from '../../service/asyncApi';
+
+
 
 export const Form = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [value, setValue] = useState('');
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

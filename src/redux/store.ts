@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { todoReducer, type FilterSchema, type TodoStateSchema } from './todoSlice'
+import type { TodoStateSchema } from '../types/types'
+import { todoReducer } from './todoSlice'
+
 
 export const store = configureStore({
     reducer: {
@@ -9,6 +11,5 @@ export const store = configureStore({
 
 export interface StateSchema {
     todo: TodoStateSchema
-    filter: FilterSchema
 }
-
+export type AppDispatch = typeof store.dispatch

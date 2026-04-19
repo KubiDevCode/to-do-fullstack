@@ -1,16 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+
 import s from './AllTasksPage.module.scss';
 import { useEffect } from 'react';
-import {
-    allTasksSelector,
-    getAllTasks,
-    getAllTasksAdmin,
-    setPrivateTask,
-    doTask,
-    userSelector,
-} from '../../redux/todoSlice';
+
 import { useAuth } from '../../hooks/useAuth';
-import type { AppDispatch } from '../../redux/store';
+import { useSelector } from 'react-redux';
+import { useAppDispatch, allTasksSelector, userSelector } from '../../redux/todoSlice';
+import { getAllTasksAdmin, getAllTasks, doTask, setPrivateTask } from '../../service/asyncApi';
 
 interface PublicTask {
     _id: string;
@@ -34,8 +29,8 @@ interface AllTasksPageProps {
 export const AllTasksPage = ({ className }: AllTasksPageProps) => {
     useAuth();
 
-    const dispatch = useDispatch<AppDispatch>();
-    const allTasks = useSelector(allTasksSelector) as UserTasks[];
+    const dispatch = useAppDispatch();
+    const allTasks = useSelector(allTasksSelector) as unknown as UserTasks[];
     const user = useSelector(userSelector);
     const userRole = user.role;
 

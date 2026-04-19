@@ -1,41 +1,34 @@
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { todoActions, type User } from "../redux/todoSlice"
+import { todoActions, useAppDispatch} from "../redux/todoSlice"
 import { api } from "../api"
+import type { User } from "../types/types"
 
 export const useAuth = () => {
-    const dispatch = useDispatch()
-    const [user, setUser] = useState<User>()
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const response = await api.get('/refresh')
+  const dispatch = useAppDispatch()
+  const [user, setUser] = useState<User | null>(null)
 
-                localStorage.setItem("token", response.data.accessToken)
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await api.get('/refresh')
+        localStorage.setItem('token', response.data.accessToken)
 
-                dispatch(todoActions.auth(
-                    {
-                        name: response.data.user.username,
-                        id: response.data.user.id,
-                        role: response.data.user.role
-                    }
-                ))
-                setUser({
-                    name: response.data.user.username,
-                    id: response.data.user.id,
-                    role: response.data.user.role
-                })
-
-            } catch (error) {
-                localStorage.removeItem("token");
-                console.log(error);
-            }
+        const authUser: User = {
+          id: response.data.user.id,
+          name: response.data.user.username,
+          role: response.data.user.role,
         }
-        checkAuth()
-    }, [dispatch])
-    
-    if (user?.name) {
-        return user
+
+        dispatch(todoActions.auth(authUser))
+        setUser(authUser)
+      } catch (error) {
+        localStorage.removeItem('token')
+        console.log(error)
+      }
     }
 
+    checkAuth()
+  }, [dispatch])
+
+  return user?.name
 }

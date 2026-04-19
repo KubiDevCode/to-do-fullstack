@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import s from './FilterTasks.module.scss';
-import { filterSelector, setFilterTasks, todoActions, } from '../../redux/todoSlice';
+import { filterSelector, setFilterTasks, todoActions, useAppDispatch, } from '../../redux/todoSlice';
 import type { FilterTasksTypes } from '../../types/types';
 
 interface FilterTasksProps {
@@ -10,7 +10,7 @@ interface FilterTasksProps {
 
 
 export const FilterTasks = ({ className }: FilterTasksProps) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const filter = useSelector(filterSelector)
 
     const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

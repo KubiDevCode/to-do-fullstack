@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import type { StateSchema } from "./store"
+import type { AppDispatch, StateSchema } from "./store"
 import {
     fetchAllTasks,
     createTask,
@@ -12,7 +12,9 @@ import {
     getAllTasks,
     getAllTasksAdmin
 } from "../service/asyncApi"
-import type { export export FilterTasksTypes, Task, TodoStateSchema, User } from "../types/types"
+import type { TodoStateSchema, FilterTasksTypes, User, Task } from "../types/types"
+import { useDispatch } from "react-redux"
+
 
 
 
@@ -94,6 +96,8 @@ export const taskDoneSelector = (id: string) => (state: StateSchema) => {
     const task = state.todo.tasks.find((task) => task._id === id)
     return task?.done ?? false;
 }
+
 export const allTasksSelector = (state: StateSchema) => state.todo.allTasks
+export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 export { setFilterTasks }

@@ -1,6 +1,7 @@
+import { useAppDispatch } from '../../redux/todoSlice';
+import { setPrivateTask, doTask, deleteTask } from '../../service/asyncApi';
 import s from './Task.module.scss';
-import { useDispatch } from 'react-redux';
-import { deleteTask, doTask, setPrivateTask } from '../../redux/todoSlice';
+
 
 interface TaskProps {
     className?: string;
@@ -20,7 +21,7 @@ export const Task = (props: TaskProps) => {
     } = props;
 
     // const [isVisible, setIsVisible] = useState(false)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
 
     const onVisibleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
